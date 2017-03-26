@@ -1,5 +1,6 @@
 package com.algaworks.validation;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.faces.application.FacesMessage;
@@ -11,10 +12,13 @@ import javax.faces.validator.ValidatorException;
 
 import org.primefaces.validate.ClientValidator;
 
+/* Validador server-side */
 @FacesValidator(EmailBlacklistValidator.VALIDATOR_ID)
 public class EmailBlacklistValidator implements Validator, ClientValidator {
 
-	public static final String VALIDATOR_ID = "com.algaworks.EmailBlacklist";
+	public static final String VALIDATOR_ID = "br.com.gilsonshow.EmailBlacklist";
+	
+	private String dominios;
 
 	@Override
 	public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
@@ -23,7 +27,7 @@ public class EmailBlacklistValidator implements Validator, ClientValidator {
 		}
 
 		String email = value.toString();
-		String[] dominios = new String[] { "hotmail.com", "bol.com.br" };
+		String[] dominios = getDominios().split(",");
 
 		for (String dominio : dominios) {
 			if (email.endsWith("@" + dominio.trim())) {
@@ -34,9 +38,16 @@ public class EmailBlacklistValidator implements Validator, ClientValidator {
 		}
 	}
 
+	/* Necessário para client-side (validation.js) */
 	@Override
 	public Map<String, Object> getMetadata() {
-		return null;
+		Map<String, Object> data = new HashMap<>();
+		
+		if (getDominios() != null) {
+			data.put("data-dominios", getDominios());
+		}
+		
+		return data;
 	}
 
 	@Override
@@ -44,4 +55,11 @@ public class EmailBlacklistValidator implements Validator, ClientValidator {
 		return VALIDATOR_ID;
 	}
 
+	public String getDominios() {
+		return dominios;
+	}
+	public void setDominios(String dominios) {
+		this.dominios = dominios;
+	}
+	
 }

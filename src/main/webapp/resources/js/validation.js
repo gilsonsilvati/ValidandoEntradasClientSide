@@ -13,10 +13,10 @@ String.prototype.endsWith = function(sufixo) {
 }
 
 /* Criando validador */
-PrimeFaces.validator['com.algaworks.EmailBlacklist'] = {
+PrimeFaces.validator['br.com.gilsonshow.EmailBlacklist'] = {
 
 	validate : function(element, value) {
-		var dominios = [ 'hotmail.com', 'bol.com.br' ];
+		var dominios = element.data('dominios').split(',');
 
 		for (i = 0; i < dominios.length; i++) {
 			var dominio = dominios[i].trim();
