@@ -1,6 +1,4 @@
-package com.algaworks;
-
-import java.math.BigDecimal;
+package com.algaworks.controller;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -9,31 +7,29 @@ import javax.faces.context.FacesContext;
 
 @ManagedBean
 @RequestScoped
-public class CadastroProdutoBean {
+public class CadastroUsuarioBean {
 
 	private String nome;
-	private BigDecimal preco;
+	private String email;
 
 	public void cadastrar() {
-		String msg = "Produto '" + nome + "' cadastrado com sucesso com preço " + preco + "!";
-		FacesContext.getCurrentInstance().addMessage(null, 
+		String msg = "Usuário '" + nome + "' cadastrado!";
+		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO, msg, msg));
 	}
 
 	public String getNome() {
 		return nome;
 	}
-
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
-	public BigDecimal getPreco() {
-		return preco;
+	public String getEmail() {
+		return email;
 	}
-
-	public void setPreco(BigDecimal preco) {
-		this.preco = preco;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }
